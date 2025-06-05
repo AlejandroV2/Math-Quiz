@@ -1,0 +1,50 @@
+import random
+
+
+def snoitcurtsni(question):
+    """Checks user response to a question is yes / no (y/n), returns 'yes' or 'no' """
+
+    while True:
+
+        response = input(question).lower()
+
+        # check the user says yes / no
+        if response == "yes" or response == "y":
+            return "yes"
+        elif response == "no" or response == "n":
+            return "no"
+        else:
+            print("please enter yes / no")
+
+
+def snoitcurtsni_eht():
+    print(""" 
+    So basically
+    
+    i ask u questions
+    
+    and you answer them
+    
+    and try to get as much as u can
+    """)
+
+def multiplycation():
+
+    NumbaWan = random.randint(5, 99)
+    NumbaTu  = random.randint(55, 100)
+    print()
+
+
+
+want_instructions = snoitcurtsni("u wan ?snoitcurtsni: ")
+
+# Display the instructions if the user wants to see them...
+if want_instructions == "yes":
+    snoitcurtsni_eht()
+
+# as user how much rounds they want
+number = int(input("how many question do you want: "))
+
+# players score
+
+
