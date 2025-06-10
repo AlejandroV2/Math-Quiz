@@ -46,18 +46,19 @@ want_instructions = yes_or_no("Do you want instructions? ")
 if want_instructions == "yes":
     The_instructions()
 
+# Questions history list
+question_history = []
 
 # The addition question generator
 def add():
-    FirstNum = random.randint(9, 50)
+    firstNum = random.randint(9, 50)
     SecondNum = random.randint(9, 99)
     print(f"Question {numberRounds}")
-    right_answer = int(input(f"What's {FirstNum} + {SecondNum}? "))
-    if right_answer == FirstNum + SecondNum:
-        return True
-    else:
-        return False
-
+    right_answer = int(input(f"What's {firstNum} + {SecondNum}? "))
+    correct_answer = (right_answer == firstNum + SecondNum)
+    # Saves to history
+    question_history.append((f"{firstNum} + {SecondNum}", right_answer, firstNum + SecondNum, correct_answer))
+    return correct_answer
 
 # The multiplication question generator
 def multiply():
@@ -65,10 +66,10 @@ def multiply():
     SecondNum = random.randint(1, 10)
     print(f"Question {numberRounds}")
     right_answer = int(input(f"What's {FirstNum} x {SecondNum}? "))
-    if right_answer == FirstNum * SecondNum:
-        return True
-    else:
-        return False
+    correct_answer = (right_answer == FirstNum * SecondNum)
+    # Saves to history
+    question_history.append((f"{FirstNum} x {SecondNum}", right_answer, FirstNum * SecondNum, correct_answer))
+    return correct_answer
 
 
 # The subtraction question generator
@@ -77,10 +78,11 @@ def subtract():
     SecondNum = random.randint(5, FirstNum)
     print(f"Question {numberRounds}")
     right_answer = int(input(f"What's {FirstNum} - {SecondNum}? "))
-    if right_answer == FirstNum - SecondNum:
-        return True
-    else:
-        return False
+    correct_answer = (right_answer == FirstNum - SecondNum)
+    # Saves to history
+    question_history.append((f"{FirstNum} - {SecondNum}", right_answer, FirstNum - SecondNum, correct_answer))
+    return correct_answer
+
 
 
 playerScore = 0
@@ -89,41 +91,52 @@ numberRounds = 1
 while True:
 
     # Ask user what kind of math question they want
-    userInput = input("What kind of math question do want: ")
+    userInput = input("What kind of math question do want (type 'done' to finish): ")
     print()
-
+    # What the user needs to type to get the question they want
     if userInput == "+":
+        # Tell the user whether they got it right or wrong
         if add():
-            print("Your right")
+            print("Good job! You got it right. ")
             print()
             playerScore += 1
         else:
-            print("You got it wrong its ")
+            print("Sorry! You got it wrong. ")
 
         numberRounds += 1
-
+    # What the user needs to type to get the question they want
     elif userInput == "-":
+        # Tell the user whether they got it right or wrong
         if subtract():
-            print("Your right")
+            print("Good job! You got it right. ")
             print()
             playerScore += 1
         else:
-            print("You got it wrong")
+            print("Sorry! You got it wrong. ")
 
         numberRounds += 1
-
+    # What the user needs to type to get the question they want
     elif userInput == "x":
+        # Tell the user whether they got it right or wrong
         if multiply():
-            print("Your right")
+            print("Good job! You got it right. ")
             print()
             playerScore += 1
         else:
-            print("You got it wrong")
-
+            print("Sorry! You got it wrong. ")
+            print()
         numberRounds += 1
     # Exit code for user
+
     # Also displays how much the user got right
     elif userInput == "done":
-        print(f"You got {playerScore} out of {numberRounds} questions")
+        print(f"You got {playerScore} out of {numberRounds -1 } questions")
+        # Ask user whether they want to see the history
+        if yes_or_no("Do you want to see your question history? ") == "yes":
+            print("\n Questions history🤑🤑:")
+            for i, (q, user_ans, correct_ans, result) in enumerate(question_history, 1):
+                outcome = "🤑Correct🤑" if result else "🤣Incorrect🤣"
+                print(f"{i}. {q} = {correct_ans} | You: {user_ans} → {outcome}")
         print("Thanks for playing!!")
         break
+
